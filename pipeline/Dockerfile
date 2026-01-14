@@ -10,7 +10,7 @@ COPY pyproject.toml .python-version uv.lock ./
 
 RUN uv sync --locked
 
-COPY ingest_data.py .
+COPY homework.py .
 
-ENTRYPOINT ["python", "ingest_data.py"]
+ENTRYPOINT ["python", "homework.py"]
 
