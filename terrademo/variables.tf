@@ -5,7 +5,7 @@ variable "project" {
 
 variable "region" {
   description = "Project Region"
-  default     = "europe-west4"
+  default     = "europe-west2"
 }
 
 variable "location" {
@@ -15,7 +15,7 @@ variable "location" {
 
 variable "bcs_bucket_name" {
   description = "My Storage Bucket Name"
-  default     = "meta-imagery-484316-j9"
+  default     = "meta-imagery-484316-j9-bucket"
 }
 
 variable "bq_dataset_name" {

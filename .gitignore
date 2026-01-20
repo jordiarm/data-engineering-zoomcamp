@@ -258,3 +258,5 @@ terraform.rc
 # planout
 
 terraform-provider-google_v7.16.0_x5
+
+.env_encoded
