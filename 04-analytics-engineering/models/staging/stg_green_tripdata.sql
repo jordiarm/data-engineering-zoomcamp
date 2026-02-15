@@ -1,5 +1,5 @@
 with source as (
-    select * from {{ source('raw_data', 'green_tripdata') }}
+    select * from {{ source('raw', 'green_tripdata') }}
 ),
 
 renamed as (
@@ -29,8 +29,7 @@ renamed as (
         cast(ehail_fee as numeric) as ehail_fee,
         cast(improvement_surcharge as numeric) as improvement_surcharge,
         cast(total_amount as numeric) as total_amount,
-        {{ safe_cast('payment_type', 'integer') }} as payment_type,
-
+        {{ safe_cast('payment_type', 'integer') }} as payment_type
     from source
     -- Filter out records with null vendor_id (data quality requirement)
     where vendorid is not null
