@@ -5,12 +5,8 @@ decompress from .csv.gz, and upload as .csv to a GCS bucket.
 Prerequisites:
     pip install google-cloud-storage requests
 
-Authentication:
-    Either set GOOGLE_APPLICATION_CREDENTIALS env var pointing to a service account key,
-    or run `gcloud auth application-default login` for local dev.
-
 Usage:
-    python upload_fhv_to_gcs.py --bucket your-bucket-name [--prefix raw/fhv/] [--workers 4]
+    python upload_fhv_to_gcs.py
 """
 
 import argparse
