@@ -260,3 +260,8 @@ terraform.rc
 terraform-provider-google_v7.16.0_x5
 
 .env_encoded
+
+.bruin.yml
+logs/runs
+logs/*.log
+*.py[cod]
