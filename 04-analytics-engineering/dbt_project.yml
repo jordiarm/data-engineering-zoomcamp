@@ -36,6 +36,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   ny_taxi_rides:
-    example:
+    staging:
       +materialized: view
-
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table
