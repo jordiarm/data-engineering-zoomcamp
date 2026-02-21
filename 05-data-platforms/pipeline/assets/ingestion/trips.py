@@ -43,7 +43,7 @@ def materialize():
             url = f"{BASE_URL}/{taxi_type}_tripdata_{year_month}.parquet"
             print(f"Fetching {url}")
 
-            response = requests.get(url)
+            response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
             response.raise_for_status()
 
             df = pd.read_parquet(BytesIO(response.content))
