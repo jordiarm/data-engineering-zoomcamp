@@ -1,7 +1,7 @@
 /* @bruin
 
 name: reports.trips_report
-type: duckdb.sql
+type: bq.sql
 
 depends:
   - staging.trips
@@ -18,20 +18,20 @@ columns:
     description: Trip pickup date
     primary_key: true
   - name: taxi_type
-    type: varchar
+    type: string
     description: Type of taxi (yellow, green, etc.)
     primary_key: true
   - name: payment_type_name
-    type: varchar
+    type: string
     description: Payment method name
     primary_key: true
   - name: total_trips
-    type: bigint
+    type: int64
     description: Total number of trips
     checks:
       - name: non_negative
   - name: total_passengers
-    type: bigint
+    type: int64
     description: Total number of passengers
     checks:
       - name: non_negative

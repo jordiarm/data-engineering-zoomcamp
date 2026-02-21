@@ -1,7 +1,7 @@
 /* @bruin
 
 name: staging.trips
-type: duckdb.sql
+type: bq.sql
 
 depends:
   - ingestion.trips
@@ -38,7 +38,7 @@ columns:
     type: float
     description: Total amount charged to passenger
   - name: payment_type_name
-    type: varchar
+    type: string
     description: Payment method name from lookup table
 
 custom_checks:
