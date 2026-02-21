@@ -1,3 +1,5 @@
+/* @bruin
+
 name: staging.trips
 type: duckdb.sql
 
@@ -42,9 +44,9 @@ columns:
 custom_checks:
   - name: row_count_positive
     description: Ensures the staging table is not empty after load
-    query: SELECT COUNT(*) FROM staging.trips
-    value: 0
-    operator: ">"
+    query: SELECT CASE WHEN COUNT(*) > 0 THEN 1 ELSE 0 END FROM staging.trips
+    value: 1
+    operator: "="
 
 @bruin */
 
@@ -55,8 +57,8 @@ WITH deduplicated AS (
             PARTITION BY
                 tpep_pickup_datetime,
                 tpep_dropoff_datetime,
-                PULocationID,
-                DOLocationID,
+                pu_location_id,
+                do_location_id,
                 fare_amount,
                 taxi_type
             ORDER BY extracted_at DESC
@@ -71,9 +73,9 @@ SELECT
     d.tpep_dropoff_datetime AS dropoff_datetime,
     d.passenger_count,
     d.trip_distance,
-    d.PULocationID          AS pickup_location_id,
-    d.DOLocationID          AS dropoff_location_id,
-    d.RatecodeID            AS rate_code_id,
+    d.pu_location_id        AS pickup_location_id,
+    d.do_location_id        AS dropoff_location_id,
+    d.ratecode_id           AS rate_code_id,
     d.payment_type,
     p.payment_type_name,
     d.fare_amount,

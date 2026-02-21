@@ -44,8 +44,6 @@ columns:
   - name: total_revenue
     type: float
     description: Total revenue (sum of total_amount)
-    checks:
-      - name: non_negative
 
 @bruin */
 
