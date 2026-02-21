@@ -59,7 +59,7 @@ WITH deduplicated AS (
                 tpep_dropoff_datetime,
                 pu_location_id,
                 do_location_id,
-                fare_amount,
+                CAST(fare_amount AS NUMERIC),
                 taxi_type
             ORDER BY extracted_at DESC
         ) AS _row_num
@@ -69,8 +69,8 @@ WITH deduplicated AS (
 )
 
 SELECT
-    d.tpep_pickup_datetime  AS pickup_datetime,
-    d.tpep_dropoff_datetime AS dropoff_datetime,
+    CAST(d.tpep_pickup_datetime AS TIMESTAMP)  AS pickup_datetime,
+    CAST(d.tpep_dropoff_datetime AS TIMESTAMP) AS dropoff_datetime,
     d.passenger_count,
     d.trip_distance,
     d.pu_location_id        AS pickup_location_id,
