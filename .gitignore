@@ -1,6 +1,7 @@
 *.txt
 
 *.json
+!.vscode/mcp.json
 
 *.parquet
 
@@ -267,3 +268,4 @@ logs/*.log
 *.py[cod]
 
 *.db
+logs/queries
