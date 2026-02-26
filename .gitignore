@@ -6,6 +6,8 @@
 
 *.parquet
 
+06-batch-processing/fhvhv/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
