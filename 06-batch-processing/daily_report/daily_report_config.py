@@ -1,56 +1,77 @@
 from pyspark.sql import types
 
 
-class DailyReportConfig():
+class BaseConfig:
 
-    PATH = "/Users/jordiarmentia/data-engineering-zoomcamp/06-batch-processing/fhvhv/2021/01/"
+    VENDOR_ID = {
+        1 : "Creative Mobile Technologies, LLC",
+        2 : "Curb Mobility, LLC",
+        6 : "Myle Technologies Inc",
+        7 : "Helix",
+    }
 
-    SCHEMA = types.StructType([
-        types.StructField('dispatching_base_num', types.StringType(), True),
-        types.StructField('originating_base_num', types.StringType(), True),
-        types.StructField('request_datetime', types.TimestampType(), True),
-        types.StructField('on_scene_datetime', types.TimestampType(), True),
-        types.StructField('pickup_datetime', types.TimestampType(), True),
-        types.StructField('dropoff_datetime', types.TimestampType(), True),
-        types.StructField('PULocationID', types.LongType(), True),
-        types.StructField('DOLocationID', types.LongType(), True),
-        types.StructField('trip_miles', types.DoubleType(), True),
-        types.StructField('trip_time', types.LongType(), True),
-        types.StructField('base_passenger_fare', types.DoubleType(), True),
-        types.StructField('tolls', types.DoubleType(), True),
-        types.StructField('bcf', types.DoubleType(), True),
-        types.StructField('sales_tax', types.DoubleType(), True),
-        types.StructField('congestion_surcharge', types.DoubleType(), True),
-        types.StructField('airport_fee', types.DoubleType(), True),
-        types.StructField('tips', types.DoubleType(), True),
-        types.StructField('driver_pay', types.DoubleType(), True),
-        types.StructField('shared_request_flag', types.StringType(), True),
-        types.StructField('shared_match_flag', types.StringType(), True),
-        types.StructField('access_a_ride_flag', types.StringType(), True),
-        types.StructField('wav_request_flag', types.StringType(), True),
-        types.StructField('wav_match_flag', types.StringType(), True),
-        types.StructField('hvfhs_license_num', types.StringType(), True),
-    ])
+    PAYMENT_TYPE = {
+        0 : "Flex Fare trip",
+        1 : "Credit card",
+        2 : "Cash",
+        3 : "No charge",
+        4 : "Dispute",
+        5 : "Unknown",
+        6 : "Voided trip",
+    }
+
+    RATE_CODE_ID = {
+        1 : "Standard rate",
+        2 : "JFK",
+        3 : "Newark",
+        4 : "Nassau or Westchester",
+        5 : "Negotiated fare",
+        6 : "Group ride",
+        99 : "Null/unknown",
+    }
+
+
+class YellowDailyReportConfig:
 
     DATE_COLS = [
-        "pickup_datetime",
-        "dropoff_datetime",
-        "request_datetime",
-        "on_scene_datetime",
+        "tpep_pickup_datetime",
+        "tpep_dropoff_datetime",
     ]
 
     GROUPBY_COLS = [
-        "pickup_date",
+        "tpep_pickup_date",
+        "tpep_dropoff_date",
+        # "VendorID",
+        "vendor_name",
         "PULocationID",
-        "hvfhs_license_num"
+        "DOLocationID",
+        # "payment_type",
+        "payment_type_description",
+        "store_and_fwd_flag",
+    ]
+
+    AGG_COLS = [
+        "trip_distance",
+        "fare_amount",
+        "tip_amount",
+        # "trip_time",
+        # "sales_tax",
+        # "congestion_surcharge",
+        # "base_passenger_fare",
+    ]
+
+class GreenDailyReportConfig:
+
+    DATE_COLS = [
+        "lpep_pickup_datetime",
+        "lpep_dropoff_datetime",
+    ]
+
+    GROUPBY_COLS = [
 
     ]
 
     AGG_COLS = [
-        "trip_miles",
-        "trip_time",
-        "sales_tax",
-        "congestion_surcharge",
-        "base_passenger_fare",
+
     ]
 

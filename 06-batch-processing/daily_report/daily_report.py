@@ -1,30 +1,40 @@
-from pyspark.sql import SparkSession, DataFrame
+from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
-from daily_report_transforms import (
-    format_license_num,
-    get_date_columns
+
+from .daily_report_transforms import (
+    get_date_columns,
+    add_payment_types,
+    add_vendor_id
 )
-from daily_report_config import DailyReportConfig
+from .daily_report_config import BaseConfig, YellowDailyReportConfig, GreenDailyReportConfig
 
 
-# TODO: Add date filter parameter (start_date, end_date) to scope the report
-# to a specific date range. Filter should be applied on `pickup_date` before
-# the groupBy aggregation for efficiency.
-def create_daily_report(spark: SparkSession) -> DataFrame:
+def create_yellow_daily_report(df: DataFrame, start_date: str, end_date: str) -> DataFrame:
 
-    df = spark.read.schema(DailyReportConfig.SCHEMA).parquet(DailyReportConfig.PATH)
+    """Creates the daily NY Yellow Taxi Report for given dates"""
 
     return (
         df
-        .transform(format_license_num)
-        .transform(get_date_columns, DailyReportConfig.DATE_COLS)
-        .withColumn("pickup_date", F.to_date("pickup_datetime"))
-        .groupBy(DailyReportConfig.GROUPBY_COLS)
+        .transform(get_date_columns, YellowDailyReportConfig.DATE_COLS)
+        .where(F.col("tpep_pickup_date").between(start_date, end_date))
+        .transform(add_payment_types, BaseConfig.PAYMENT_TYPE)
+        .transform(add_vendor_id, BaseConfig.VENDOR_ID)
+        .groupBy(YellowDailyReportConfig.GROUPBY_COLS)
         .agg(
-            *[F.sum(col).alias(f"total_{col}") for col in DailyReportConfig.AGG_COLS],
-            *[F.max(col).alias(f"max_{col}") for col in DailyReportConfig.AGG_COLS]
+            F.count("*").alias("trip_count"),
+            *[F.round(F.sum(col), 2).alias(f"total_{col}") for col in YellowDailyReportConfig.AGG_COLS],
+            *[F.max(col).alias(f"max_{col}") for col in YellowDailyReportConfig.AGG_COLS]
         )
     )
 
 
+def create_green_daily_report(df:DataFrame, start_date: str, end_date: str) -> DataFrame:
+    """Creates the daily NY Green Taxi Report for given dates"""
+
+    return (
+        df
+        .transform(get_date_columns, GreenDailyReportConfig.DATE_COLS)
+        .where(F.col("lpep_pickup_date").between(start_date, end_date))
+        .transform(add_payment_types, BaseConfig.PAYMENT_TYPE)
+    )
 
