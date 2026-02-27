@@ -31,3 +31,26 @@ class DailyReportConfig():
         types.StructField('wav_match_flag', types.StringType(), True),
         types.StructField('hvfhs_license_num', types.StringType(), True),
     ])
+
+    DATE_COLS = [
+        "pickup_datetime",
+        "dropoff_datetime",
+        "request_datetime",
+        "on_scene_datetime",
+    ]
+
+    GROUPBY_COLS = [
+        "pickup_date",
+        "PULocationID",
+        "hvfhs_license_num"
+
+    ]
+
+    AGG_COLS = [
+        "trip_miles",
+        "trip_time",
+        "sales_tax",
+        "congestion_surcharge",
+        "base_passenger_fare",
+    ]
+
