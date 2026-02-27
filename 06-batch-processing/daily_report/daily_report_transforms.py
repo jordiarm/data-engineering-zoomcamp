@@ -35,7 +35,7 @@ def add_payment_types(df: DataFrame, payment_type_map: dict) -> DataFrame:
         *[item for k, v in payment_type_map.items() for item in (F.lit(k), F.lit(v))]
     )
 
-    return df.withColumn("payment_type", mapping_expr[F.col("payment_type")])
+    return df.withColumn("payment_type_description", mapping_expr[F.col("payment_type")])
 
 def add_vendor_id(df: DataFrame, vendor_id_map: dict) -> DataFrame:
     mapping_expr = F.create_map(

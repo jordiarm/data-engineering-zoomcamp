@@ -3,14 +3,14 @@ from pyspark.sql import types
 
 class BaseConfig:
 
-    VENDOR_ID = {
+    VENDOR_ID: dict = {
         1 : "Creative Mobile Technologies, LLC",
         2 : "Curb Mobility, LLC",
         6 : "Myle Technologies Inc",
         7 : "Helix",
     }
 
-    PAYMENT_TYPE = {
+    PAYMENT_TYPE: dict = {
         0 : "Flex Fare trip",
         1 : "Credit card",
         2 : "Cash",
@@ -20,7 +20,7 @@ class BaseConfig:
         6 : "Voided trip",
     }
 
-    RATE_CODE_ID = {
+    RATE_CODE_ID: dict = {
         1 : "Standard rate",
         2 : "JFK",
         3 : "Newark",
@@ -30,48 +30,36 @@ class BaseConfig:
         99 : "Null/unknown",
     }
 
-
-class YellowDailyReportConfig:
-
-    DATE_COLS = [
-        "tpep_pickup_datetime",
-        "tpep_dropoff_datetime",
-    ]
-
-    GROUPBY_COLS = [
+    GROUPBY_COLS: list[str] = [
         "tpep_pickup_date",
         "tpep_dropoff_date",
-        # "VendorID",
+        "VendorID",
         "vendor_name",
         "PULocationID",
         "DOLocationID",
-        # "payment_type",
+        "payment_type",
         "payment_type_description",
         "store_and_fwd_flag",
     ]
 
-    AGG_COLS = [
+    AGG_COLS: list[str] = [
         "trip_distance",
         "fare_amount",
         "tip_amount",
-        # "trip_time",
-        # "sales_tax",
-        # "congestion_surcharge",
-        # "base_passenger_fare",
+    ]
+
+
+class YellowDailyReportConfig:
+
+    DATE_COLS: list[str] = [
+        "tpep_pickup_datetime",
+        "tpep_dropoff_datetime",
     ]
 
 class GreenDailyReportConfig:
 
-    DATE_COLS = [
+    DATE_COLS: list[str] = [
         "lpep_pickup_datetime",
         "lpep_dropoff_datetime",
     ]
-
-    GROUPBY_COLS = [
-
-    ]
-
-    AGG_COLS = [
-
-    ]
-
+    
