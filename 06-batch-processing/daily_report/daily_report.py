@@ -7,6 +7,9 @@ from daily_report_transforms import (
 from daily_report_config import DailyReportConfig
 
 
+# TODO: Add date filter parameter (start_date, end_date) to scope the report
+# to a specific date range. Filter should be applied on `pickup_date` before
+# the groupBy aggregation for efficiency.
 def create_daily_report(spark: SparkSession) -> DataFrame:
 
     df = spark.read.schema(DailyReportConfig.SCHEMA).parquet(DailyReportConfig.PATH)
